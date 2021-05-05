@@ -80,7 +80,7 @@ class ViewController: UIViewController {
     ///   - name: String
     ///   - secondName: String
     ///   - raiting: String
-    public func saveData(name: String, secondName: String, raiting: String) {
+    func saveData(name: String, secondName: String, raiting: String) {
         if indexPathRow == -1 {
             informationAboutStudent.append(["Name": name,"SecondName": secondName, "Raiting": raiting])
             
