@@ -4,7 +4,6 @@ class ViewController: UIViewController {
     
     var indexPathRow: Int = -1
     
-    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
     @IBOutlet weak var raitingTextField: UITextField!
@@ -32,15 +31,18 @@ class ViewController: UIViewController {
                 present(ac, animated: true)
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotificationForItemEdit"), object: nil)
-                dismiss(animated: true, completion: nil)
                 
+                dismiss(animated: true, completion: nil)
             } else {
                 let ac = UIAlertController(title: "Error", message: "Wrong raiting", preferredStyle: .alert)
+                
                 ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                
                 present(ac, animated: true)
             }
         } else {
             let ac = UIAlertController(title: "Error", message: "Wrong name or second name", preferredStyle: .alert)
+            
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             
             present(ac, animated: true)
@@ -49,7 +51,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
     }
     
     /// Check nameTextField and secondNameTextField for correct input
@@ -82,11 +83,13 @@ class ViewController: UIViewController {
     public func saveData(name: String, secondName: String, raiting: String) {
         if indexPathRow == -1 {
             informationAboutStudent.append(["Name": name,"SecondName": secondName, "Raiting": raiting])
+            
             UserDefaults.standard.set(informationAboutStudent, forKey: informationAboutStudentKey)
         } else {
             informationAboutStudent[indexPathRow]["Name"] = name
             informationAboutStudent[indexPathRow]["SecondName"] = secondName
             informationAboutStudent[indexPathRow]["Raiting"] = raiting
+            
             indexPathRow = 0
         }
     }

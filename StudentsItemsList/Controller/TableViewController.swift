@@ -5,7 +5,6 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.shouldReload), name: NSNotification.Name(rawValue: "newDataNotificationForItemEdit"), object: nil)
-        
     }
     
     @objc func shouldReload() {
@@ -26,6 +25,7 @@ class TableViewController: UITableViewController {
         
         cell.textLabel?.text = currentStudent["Name"]! + " " + currentStudent["SecondName"]!
         cell.detailTextLabel?.text = currentStudent["Raiting"]!
+        
         return cell
     }
 
@@ -33,7 +33,7 @@ class TableViewController: UITableViewController {
         return true
     }
 
-    //Переход к редактированию ученика по нажатию на ячейку
+    //Open then tapped cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let studentData = informationAboutStudent[indexPath.row]
@@ -53,6 +53,7 @@ class TableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         tableView.reloadData()
     }
     
