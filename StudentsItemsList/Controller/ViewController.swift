@@ -30,7 +30,7 @@ class ViewController: UIViewController {
                 
                 present(ac, animated: true)
                 
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotificationForItemEdit"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
                 
                 dismiss(animated: true, completion: nil)
             } else {
