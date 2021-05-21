@@ -2,7 +2,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var indexPathRow: Int = -1
+    var student = Students()
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     
     //Cancel button
     @IBAction func cancelButton(_ sender: Any) {
-
+        self.navigationController?.popToRootViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
     
@@ -24,15 +24,13 @@ class ViewController: UIViewController {
         if (containsLetters(input: nameStudent) && containsLetters(input: secondNameStudent)) == true {
             if containsRaiting(input: Int(raiting) ?? 0) == true {
                 
-                saveData(name: nameStudent, secondName: secondNameStudent, raiting: raiting)
-                
-                let ac = UIAlertController(title: "Seccessfull", message: "", preferredStyle: .alert)
-                
-                present(ac, animated: true)
+                student.saveData(name: nameStudent, secondName: secondNameStudent, raiting: raiting)
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
                 
+                self.navigationController?.popToRootViewController(animated: true)
                 dismiss(animated: true, completion: nil)
+                
             } else {
                 let ac = UIAlertController(title: "Error", message: "Wrong raiting", preferredStyle: .alert)
                 
@@ -73,24 +71,5 @@ class ViewController: UIViewController {
             return true
         }
         return false
-    }
-    
-    /// Save in UserDefaults data and check input string data, relize edit save too
-    /// - Parameters:
-    ///   - name: String
-    ///   - secondName: String
-    ///   - raiting: String
-    func saveData(name: String, secondName: String, raiting: String) {
-        if indexPathRow == -1 {
-            informationAboutStudent.append(["Name": name,"SecondName": secondName, "Raiting": raiting])
-            
-            UserDefaults.standard.set(informationAboutStudent, forKey: informationAboutStudentKey)
-        } else {
-            informationAboutStudent[indexPathRow]["Name"] = name
-            informationAboutStudent[indexPathRow]["SecondName"] = secondName
-            informationAboutStudent[indexPathRow]["Raiting"] = raiting
-            
-            indexPathRow = 0
-        }
     }
 }

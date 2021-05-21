@@ -1,9 +1,10 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.shouldReload), name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
     }
     
@@ -16,15 +17,16 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return informationAboutStudent.count
+        return Students.informationAboutStudent.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let currentStudent = informationAboutStudent[indexPath.row]
+        let currentStudent = Students.informationAboutStudent[indexPath.row]
         
-        cell.textLabel?.text = currentStudent["Name"]! + " " + currentStudent["SecondName"]!
-        cell.detailTextLabel?.text = currentStudent["Raiting"]!
+        
+        cell.textLabel?.text = (currentStudent["Name"] ?? "") + " " + (currentStudent["SecondName"] ?? "")
+        cell.detailTextLabel?.text = currentStudent["Raiting"]
         
         return cell
     }
@@ -36,13 +38,13 @@ class TableViewController: UITableViewController {
     //Open then tapped cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let studentData = informationAboutStudent[indexPath.row]
+        let studentData = Students.informationAboutStudent[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
         
         let changeVc = storyboard.instantiateViewController(withIdentifier: "AddInformation") as! ViewController
         
-        changeVc.indexPathRow = indexPath.row
+        Students.indexPathRow = indexPath.row
         changeVc.loadViewIfNeeded()
         changeVc.nameTextField.text = studentData["Name"]
         changeVc.secondNameTextField.text = studentData["SecondName"]
@@ -57,10 +59,11 @@ class TableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    @available(iOS 11.0, *)
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deletAction = UIContextualAction(style: .destructive, title: "Delet") {_,_,_ in
-            informationAboutStudent.remove(at: indexPath.row)
+            Students.informationAboutStudent.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
