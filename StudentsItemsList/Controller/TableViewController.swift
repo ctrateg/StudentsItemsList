@@ -46,9 +46,9 @@ class TableViewController: UITableViewController {
         
         Students.indexPathRow = indexPath.row
         changeVc.loadViewIfNeeded()
-        changeVc.nameTextField.text = studentData["Name"]
-        changeVc.secondNameTextField.text = studentData["SecondName"]
-        changeVc.raitingTextField.text = studentData["Raiting"]
+        changeVc.nameTextField.text = studentData[Students.StudentsDataLink.name]
+        changeVc.secondNameTextField.text = studentData[Students.StudentsDataLink.secondName]
+        changeVc.raitingTextField.text = studentData[Students.StudentsDataLink.raiting]
         
         self.present(changeVc, animated: true)
     }
@@ -70,5 +70,16 @@ class TableViewController: UITableViewController {
         let swipeActions = UISwipeActionsConfiguration(actions: [deletAction])
         
         return swipeActions
+    }
+    
+    @available(iOS, deprecated: 11.0)
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+                
+                let deleteAction = UITableViewRowAction(style: .destructive, title: "Удалить") {
+                    _, indexPath in
+                    Students.informationAboutStudent.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
+                return [deleteAction]
     }
 }
