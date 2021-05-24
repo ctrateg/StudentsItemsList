@@ -44,7 +44,8 @@ class TableViewController: UITableViewController {
         
         let changeVc = storyboard.instantiateViewController(withIdentifier: "AddInformation") as! ViewController
         
-        Students.indexPathRow = indexPath.row
+        ViewController.indexPathRow = indexPath.row
+        
         changeVc.loadViewIfNeeded()
         changeVc.nameTextField.text = studentData[Students.StudentsDataLink.name]
         changeVc.secondNameTextField.text = studentData[Students.StudentsDataLink.secondName]

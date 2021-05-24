@@ -1,7 +1,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    static var indexPathRow: Int? = nil
     var student = Students()
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -24,8 +24,12 @@ class ViewController: UIViewController {
         if containsLetters(input: nameStudent) == true {
             if containsLetters(input: secondNameStudent) == true {
                 if containsRaiting(input: Int(raiting) ?? 0) == true {
-                
-                    student.saveData(name: nameStudent, secondName: secondNameStudent, raiting: raiting)
+                    //saveoredit
+                    if  ViewController.indexPathRow != nil{
+                        student.editLoad(name: nameStudent, secondName: secondNameStudent, raiting: raiting, indexPathRow: ViewController.indexPathRow ?? 0)
+                    } else {
+                        student.saveData(name: nameStudent, secondName: secondNameStudent, raiting: raiting)
+                    }
                 
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
                 
@@ -68,7 +72,6 @@ class ViewController: UIViewController {
         var inputResult:Bool = false
         
         input.lowercased().forEach{ chr in
-            
             if ("a"..."z").contains(String(chr)) == true || ("а"..."я").contains(String(chr)) == true {
                 inputResult = true
             }
@@ -85,4 +88,12 @@ class ViewController: UIViewController {
         }
         return false
     }
+    
+   /* func saveOrEdit(name: String, secondName: String, raiting: String, indexPathRow: Int?) {
+        if let editVar = indexPathRow {
+            student.editLoad(name: name, secondName: secondName, raiting: raiting, indexPathRow: editVar)
+        } else {
+            student.saveData(name: name, secondName: secondName, raiting: raiting)
+        }
+    }*/
 }
