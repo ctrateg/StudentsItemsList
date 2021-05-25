@@ -54,7 +54,7 @@ class ViewController: UIViewController {
                 present(ac, animated: true)
             }
         } else {
-            let ac = UIAlertController(title: "Error", message: "Wrong name name", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Error", message: "Wrong name", preferredStyle: .alert)
         
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
     /// - Returns: Bool
     func containsLetters(input: String) -> Bool {
         for chr in input.lowercased() {
-            if !(chr >= "a" && chr <= "z") && (!(chr >= "а" && chr <= "я")) {
+            if !("a"..."z").contains(String(chr)) && !("а"..."я").contains(String(chr)) {
                 return false
             }
         }
