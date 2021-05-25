@@ -72,14 +72,12 @@ class ViewController: UIViewController {
     /// - Parameter input: String
     /// - Returns: Bool
     func containsLetters(input: String) -> Bool {
-        var inputResult:Bool = false
-        
-        input.lowercased().forEach{ chr in
-            if ("a"..."z").contains(String(chr)) == true || ("а"..."я").contains(String(chr)) == true {
-                inputResult = true
+        for chr in input.lowercased() {
+            if !(chr >= "a" && chr <= "z") && (!(chr >= "а" && chr <= "я")) {
+                return false
             }
         }
-        return inputResult
+        return true
     }
     
     /// Check raitingTextField for correct input
