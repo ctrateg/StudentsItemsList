@@ -21,10 +21,13 @@ class ViewController: UIViewController {
         let nameStudent = "\(nameTextField.text ?? "")"
         let raiting = raitingTextField.text ?? ""
         
+        // name check logic
         if containsLetters(input: nameStudent) == true {
+            // secondName check logic
             if containsLetters(input: secondNameStudent) == true {
+                // raiting check logic
                 if containsRaiting(input: Int(raiting) ?? 0) == true {
-                    //saveoredit
+                    //save or edit logic
                     if  ViewController.indexPathRow != nil{
                         student.editLoad(name: nameStudent, secondName: secondNameStudent, raiting: raiting, indexPathRow: ViewController.indexPathRow ?? 0)
                     } else {
@@ -88,12 +91,4 @@ class ViewController: UIViewController {
         }
         return false
     }
-    
-   /* func saveOrEdit(name: String, secondName: String, raiting: String, indexPathRow: Int?) {
-        if let editVar = indexPathRow {
-            student.editLoad(name: name, secondName: secondName, raiting: raiting, indexPathRow: editVar)
-        } else {
-            student.saveData(name: name, secondName: secondName, raiting: raiting)
-        }
-    }*/
 }

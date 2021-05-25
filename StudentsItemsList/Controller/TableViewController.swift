@@ -60,6 +60,7 @@ class TableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // delet button after 11 version
     @available(iOS 11.0, *)
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -73,6 +74,7 @@ class TableViewController: UITableViewController {
         return swipeActions
     }
     
+    //delet button до 11 version
     @available(iOS, deprecated: 11.0)
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
                 
