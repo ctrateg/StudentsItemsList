@@ -13,9 +13,9 @@
 		1B4B5FB8264187B900A80F7B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B5FB7264187B900A80F7B /* ViewController.swift */; };
 		1B4B5FBD264187BB00A80F7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B4B5FBC264187BB00A80F7B /* Assets.xcassets */; };
 		1B4B5FC0264187BB00A80F7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B4B5FBE264187BB00A80F7B /* LaunchScreen.storyboard */; };
-		1B4B5FC8264187D200A80F7B /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B5FC7264187D200A80F7B /* Students.swift */; };
 		1B4B5FCF2641940E00A80F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B4B5FCE2641940E00A80F7B /* Main.storyboard */; };
 		1B4B5FD126419AAA00A80F7B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B5FD026419AAA00A80F7B /* TableViewController.swift */; };
+		1BC9F4D32667050800AE7035 /* StudentsData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +27,9 @@
 		1B4B5FBC264187BB00A80F7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B4B5FBF264187BB00A80F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B4B5FC1264187BB00A80F7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B4B5FC7264187D200A80F7B /* Students.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
 		1B4B5FCE2641940E00A80F7B /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1B4B5FD026419AAA00A80F7B /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		1BC9F4D22667050800AE7035 /* StudentsData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudentsData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +69,7 @@
 				1B4B5FB5264187B900A80F7B /* SceneDelegate.swift */,
 				1B4B5FB3264187B900A80F7B /* AppDelegate.swift */,
 				1B4B5FBC264187BB00A80F7B /* Assets.xcassets */,
+				1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */,
 				1B4B5FC1264187BB00A80F7B /* Info.plist */,
 			);
 			path = StudentsItemsList;
@@ -77,7 +78,6 @@
 		1B4B5FCB264193A100A80F7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1B4B5FC7264187D200A80F7B /* Students.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -172,10 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B4B5FB8264187B900A80F7B /* ViewController.swift in Sources */,
+				1BC9F4D32667050800AE7035 /* StudentsData.xcdatamodeld in Sources */,
 				1B4B5FB4264187B900A80F7B /* AppDelegate.swift in Sources */,
 				1B4B5FB6264187B900A80F7B /* SceneDelegate.swift in Sources */,
 				1B4B5FD126419AAA00A80F7B /* TableViewController.swift in Sources */,
-				1B4B5FC8264187D200A80F7B /* Students.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +317,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 638JMZXLWD;
 				INFOPLIST_FILE = StudentsItemsList/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -337,7 +337,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 638JMZXLWD;
 				INFOPLIST_FILE = StudentsItemsList/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,6 +371,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1BC9F4D22667050800AE7035 /* StudentsData.xcdatamodel */,
+			);
+			currentVersion = 1BC9F4D22667050800AE7035 /* StudentsData.xcdatamodel */;
+			path = StudentsData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1B4B5FA8264187B900A80F7B /* Project object */;
 }

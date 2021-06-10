@@ -1,8 +1,8 @@
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     static var indexPathRow: Int? = nil
-    var student = Students()
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
@@ -26,46 +26,31 @@ class ViewController: UIViewController {
             // secondName check logic
             if containsLetters(input: secondNameStudent) == true {
                 // raiting check logic
-                if containsRaiting(input: Int(raiting) ?? 0) == true {
-                    //save or edit logic
-                    if  ViewController.indexPathRow != nil{
-                        student.editLoad(name: nameStudent, secondName: secondNameStudent, raiting: raiting, indexPathRow: ViewController.indexPathRow ?? 0)
-                    } else {
-                        student.saveData(name: nameStudent, secondName: secondNameStudent, raiting: raiting)
-                    }
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
-                
-                    self.navigationController?.popToRootViewController(animated: true)
-                    dismiss(animated: true, completion: nil)
-                
+                if containsRaiting(input: raiting) == true {
+                    
+                    saveOrEditLogic(nameStudent, secondNameStudent, raiting)
+                    
                 } else {
-                    let ac = UIAlertController(title: "Error", message: "Wrong raiting", preferredStyle: .alert)
-                
-                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                
-                    present(ac, animated: true)
+                    
+                    alert(typeError: "raiting")
+                    
                 }
             } else {
-                let ac = UIAlertController(title: "Error", message: "Wrong second name", preferredStyle: .alert)
-            
-                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            
-                present(ac, animated: true)
+                
+                alert(typeError: "second name ")
+                
             }
         } else {
-            let ac = UIAlertController(title: "Error", message: "Wrong name", preferredStyle: .alert)
-        
-            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-            present(ac, animated: true)
+            
+            alert(typeError: "name")
+            
         }
-        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ViewController.loadItems()
     }
     
     /// Check nameTextField and secondNameTextField for correct input
@@ -83,10 +68,96 @@ class ViewController: UIViewController {
     /// Check raitingTextField for correct input
     /// - Parameter input: Int
     /// - Returns: Bool
-    func containsRaiting(input: Int) -> Bool {
-        if (input >= 1) && (input <= 5) {
+    func containsRaiting(input: String) -> Bool {
+        
+        if (Int(input) ?? 0 >= 1) && (Int(input) ?? 0 <= 5) {
             return true
         }
         return false
+    }
+
+    static var informationAboutStudent: [StudentsEntity] = []
+    
+    // links
+    let nameAttributeKey = "name"
+    let secondNameAttributeKey = "secondName"
+    let raitingAttributeKey = "raiting"
+    
+    
+    //save function
+    func saveData(_ name: String, _ secondName: String, _ raiting: String) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let entity = StudentsEntity(context: context)
+        
+        entity.name = name
+        entity.secondName = secondName
+        entity.raiting = raiting
+       
+        do {
+            try context.save()
+            
+            ViewController.informationAboutStudent.append(entity)
+            
+        } catch let error as NSError {
+            print("Ошибка при сохранении: \(error), \(error.userInfo)")
+        }
+    }
+    
+    static func loadItems() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<StudentsEntity>(entityName: "StudentsEntity")
+        
+        do {
+            ViewController.informationAboutStudent = try context.fetch(request)
+        } catch let error as NSError {
+            print("Ошибка при загрузке данных: \(error), \(error.userInfo)")
+        }
+    }
+    
+    // edit funcion
+    func editData(_ name: String, _ secondName: String, _ raiting: String, indexPathRow: Int){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let studentData = ViewController.informationAboutStudent[indexPathRow]
+        
+        studentData.name = name
+        studentData.secondName = secondName
+        studentData.raiting = raiting
+        
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print("Ошибка при сохранении: \(error), \(error.userInfo)")
+        }
+    }
+    
+    func saveOrEditLogic( _ name: String, _ secondName: String, _ raiting: String){
+        
+        if  ViewController.indexPathRow != nil {
+        
+            editData(name, secondName, raiting, indexPathRow: ViewController.indexPathRow ?? 0)
+            
+            ViewController.indexPathRow = nil
+        } else {
+            
+            saveData(name, secondName, raiting)
+        }
+    
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
+    
+        self.navigationController?.popToRootViewController(animated: true)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func alert(typeError: String) {
+        let ac = UIAlertController(title: "Error", message: "Wrong \(typeError)", preferredStyle: .alert)
+    
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    
+        present(ac, animated: true)
     }
 }
