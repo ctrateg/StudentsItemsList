@@ -3,6 +3,7 @@ import CoreData
 
 class ViewController: UIViewController {
     static var indexPathRow: Int? = nil
+    let student = Students()
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
         let nameStudent = "\(nameTextField.text ?? "")"
         let raiting = raitingTextField.text ?? ""
         
+        
         // name check logic
         if containsLetters(input: nameStudent) == true {
             // secondName check logic
@@ -34,7 +36,7 @@ class ViewController: UIViewController {
                     alert(typeError: "raiting")
                 }
             } else {
-                alert(typeError: "second name ")
+                alert(typeError: "second name")
             }
         } else {
             alert(typeError: "name")
@@ -44,18 +46,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        student.loadItems()
     }
     
     /// Check nameTextField and secondNameTextField for correct input
     /// - Parameter input: String
     /// - Returns: Bool
     func containsLetters(input: String) -> Bool {
-        for chr in input.lowercased() {
-            if !("a"..."z").contains(String(chr)) && !("а"..."я").contains(String(chr)) {
-                return false
-            }
+        switch input.lowercased() {
+        case "a"..."z":
+            return true
+        case "а"..."я":
+            return true 
+        default:
+            return false
         }
-        return true
     }
     
     /// Check raitingTextField for correct input
@@ -75,14 +80,14 @@ class ViewController: UIViewController {
         
         if  ViewController.indexPathRow != nil {
         
-            Students.editData(name, secondName, raiting, indexPathRow: ViewController.indexPathRow ?? 0)
+            student.editData(name, secondName, raiting, indexPathRow: ViewController.indexPathRow ?? 0)
             
             ViewController.indexPathRow = nil
             
             dismiss(animated: true, completion: nil)
             
         } else {
-            Students.saveData(name, secondName, raiting)
+            student.saveData(name, secondName, raiting)
             
             let ac = UIAlertController(title: "Save successful", message: "Add another one?", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){_ in

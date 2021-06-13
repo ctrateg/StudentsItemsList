@@ -2,17 +2,19 @@ import UIKit
 import CoreData
 
 class TableViewController: UITableViewController {
+    let student = Students()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Students.loadItems()
+        student.loadItems()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.shouldReload), name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
     }
     
     @objc func shouldReload() {
         self.tableView.reloadData()
+        student.loadItems()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -20,12 +22,12 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Students.informationAboutStudent.count
+        return student.informationAboutStudent.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let currentStudent = Students.informationAboutStudent[indexPath.row]
+        let currentStudent = student.informationAboutStudent[indexPath.row]
         
         cell.textLabel?.text = (currentStudent.name ?? "") + " " + (currentStudent.secondName ?? "")
         cell.detailTextLabel?.text = currentStudent.raiting
@@ -40,7 +42,7 @@ class TableViewController: UITableViewController {
     //Open then tapped cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let studentData = Students.informationAboutStudent[indexPath.row]
+        let studentData = student.informationAboutStudent[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
         
@@ -67,7 +69,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deletAction = UIContextualAction(style: .destructive, title: "Delet") {_,_,_ in
-            Students.informationAboutStudent.remove(at: indexPath.row)
+            self.student.informationAboutStudent.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
@@ -76,7 +78,7 @@ class TableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        context.delete(Students.informationAboutStudent[indexPath.row])
+        context.delete(student.informationAboutStudent[indexPath.row])
         
         do {
             try context.save()
@@ -92,7 +94,7 @@ class TableViewController: UITableViewController {
     @available(iOS, deprecated: 11.0)
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Удалить") { _, indexPath in
-            Students.informationAboutStudent.remove(at: indexPath.row)
+            self.student.informationAboutStudent.remove(at: indexPath.row)
             
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -100,7 +102,7 @@ class TableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        context.delete(Students.informationAboutStudent[indexPath.row])
+        context.delete(student.informationAboutStudent[indexPath.row])
         
         do {
             try context.save()

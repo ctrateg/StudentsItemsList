@@ -3,7 +3,7 @@ import UIKit
 
 class Students {
     
-    static var informationAboutStudent: [StudentsEntity] = []
+    var informationAboutStudent: [StudentsEntity] = []
     
     // links
     let nameAttributeKey = "name"
@@ -11,7 +11,7 @@ class Students {
     let raitingAttributeKey = "raiting"
     
     //save function
-    static func saveData(_ name: String, _ secondName: String, _ raiting: String) {
+    func saveData(_ name: String, _ secondName: String, _ raiting: String) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
@@ -24,7 +24,7 @@ class Students {
         do {
             try context.save()
             
-            Students.informationAboutStudent.append(entity)
+            informationAboutStudent.append(entity)
             
         } catch let error as NSError {
             
@@ -33,14 +33,14 @@ class Students {
         }
     }
     
-    static func loadItems() {
+    func loadItems() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<StudentsEntity>(entityName: "StudentsEntity")
         
         do {
             
-            informationAboutStudent = try context.fetch(request)
+            self.informationAboutStudent = try context.fetch(request)
             
         } catch let error as NSError {
             
@@ -50,10 +50,10 @@ class Students {
     }
     
     // edit funcion
-    static func editData(_ name: String, _ secondName: String, _ raiting: String, indexPathRow: Int){
+    func editData(_ name: String, _ secondName: String, _ raiting: String, indexPathRow: Int){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        let studentData = Students.informationAboutStudent[indexPathRow]
+        let studentData = informationAboutStudent[indexPathRow]
         
         studentData.name = name
         studentData.secondName = secondName
