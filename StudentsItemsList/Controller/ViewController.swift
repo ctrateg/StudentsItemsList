@@ -3,6 +3,7 @@ import CoreData
 
 class ViewController: UIViewController {
     static var indexPathRow: Int? = nil
+    
     let student = Students()
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -87,6 +88,7 @@ class ViewController: UIViewController {
             dismiss(animated: true, completion: nil)
             
         } else {
+            
             student.saveData(name, secondName, raiting)
             
             let ac = UIAlertController(title: "Save successful", message: "Add another one?", preferredStyle: .alert)

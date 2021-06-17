@@ -16,6 +16,7 @@
 		1B4B5FCF2641940E00A80F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B4B5FCE2641940E00A80F7B /* Main.storyboard */; };
 		1B4B5FD126419AAA00A80F7B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B5FD026419AAA00A80F7B /* TableViewController.swift */; };
 		1B91C42B26728554003534A7 /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91C42A26728554003534A7 /* Students.swift */; };
+		1BBB006F2676C20C00BC977A /* StudentsEntityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBB006E2676C20C00BC977A /* StudentsEntityExtension.swift */; };
 		1BC9F4D32667050800AE7035 /* StudentsData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		1B4B5FCE2641940E00A80F7B /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1B4B5FD026419AAA00A80F7B /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		1B91C42A26728554003534A7 /* Students.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
+		1BBB006E2676C20C00BC977A /* StudentsEntityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsEntityExtension.swift; sourceTree = "<group>"; };
 		1BC9F4D22667050800AE7035 /* StudentsData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudentsData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,7 +73,6 @@
 				1B4B5FB5264187B900A80F7B /* SceneDelegate.swift */,
 				1B4B5FB3264187B900A80F7B /* AppDelegate.swift */,
 				1B4B5FBC264187BB00A80F7B /* Assets.xcassets */,
-				1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */,
 				1B4B5FC1264187BB00A80F7B /* Info.plist */,
 			);
 			path = StudentsItemsList;
@@ -80,7 +81,9 @@
 		1B4B5FCB264193A100A80F7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1BC9F4D12667050800AE7035 /* StudentsData.xcdatamodeld */,
 				1B91C42A26728554003534A7 /* Students.swift */,
+				1BBB006E2676C20C00BC977A /* StudentsEntityExtension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				1BC9F4D32667050800AE7035 /* StudentsData.xcdatamodeld in Sources */,
 				1B4B5FB4264187B900A80F7B /* AppDelegate.swift in Sources */,
 				1B4B5FB6264187B900A80F7B /* SceneDelegate.swift in Sources */,
+				1BBB006F2676C20C00BC977A /* StudentsEntityExtension.swift in Sources */,
 				1B4B5FD126419AAA00A80F7B /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

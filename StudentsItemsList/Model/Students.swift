@@ -41,6 +41,7 @@ class Students {
         do {
             
             self.informationAboutStudent = try context.fetch(request)
+            informationAboutStudent.sort( by: < )
             
         } catch let error as NSError {
             
