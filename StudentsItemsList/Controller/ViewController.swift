@@ -2,9 +2,8 @@ import UIKit
 import CoreData
 
 class ViewController: UIViewController {
-    static var indexPathRow: Int? = nil
-    
     let student = Students()
+    var indexPath = -1
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
@@ -19,28 +18,21 @@ class ViewController: UIViewController {
     /// Save button, relize check textField, creat new student, edit student
     /// - Parameter sender: Any
     @IBAction func saveButton(_ sender: Any) {
-        let secondNameStudent = "\(secondNameTextField.text ?? "")"
-        let nameStudent = "\(nameTextField.text ?? "")"
+        let secondNameStudent = secondNameTextField.text ?? ""
+        let nameStudent = nameTextField.text ?? ""
         let raiting = raitingTextField.text ?? ""
+        let person = [nameStudent, secondNameStudent, raiting]
         
-        
-        // name check logic
-        if containsLetters(input: nameStudent) == true {
-            // secondName check logic
-            if containsLetters(input: secondNameStudent) == true {
-                // raiting check logic
-                if containsRaiting(input: raiting) == true {
-                    
-                    saveOrEditLogic(nameStudent, secondNameStudent, raiting)
-                    
-                } else {
-                    alert(typeError: "raiting")
-                }
+        switch contains(person) {
+        case "":
+            if indexPath == -1 {
+                save(nameStudent, secondNameStudent, raiting)
             } else {
-                alert(typeError: "second name")
+                edit(nameStudent, secondNameStudent, raiting)
             }
-        } else {
-            alert(typeError: "name")
+            
+        default:
+            alert(typeError: contains(person))
         }
     }
     
@@ -50,69 +42,58 @@ class ViewController: UIViewController {
         student.loadItems()
     }
     
-    /// Check nameTextField and secondNameTextField for correct input
-    /// - Parameter input: String
-    /// - Returns: Bool
-    func containsLetters(input: String) -> Bool {
-        switch input.lowercased() {
-        case "a"..."z":
-            return true
-        case "а"..."я":
-            return true 
-        default:
-            return false
+    func contains(_ persons: [String]) -> String {
+        var result = ""
+        for person in persons {
+            switch person.lowercased() {
+            case "a"..."z":
+                result = ""
+            case "а"..."я":
+                result = ""
+            case "1"..."5":
+                result = ""
+            default:
+                result = "\(person)"
+            }
         }
+        return result
     }
-    
-    /// Check raitingTextField for correct input
-    /// - Parameter input: Int
-    /// - Returns: Bool
-    func containsRaiting(input: String) -> Bool {
-        
-        if (Int(input) ?? 0 >= 1) && (Int(input) ?? 0 <= 5) {
-            return true
-        }
-        return false
-    }
+
 
     
     
-    func saveOrEditLogic( _ name: String, _ secondName: String, _ raiting: String){
-        
-        if  ViewController.indexPathRow != nil {
-        
-            student.editData(name, secondName, raiting, indexPathRow: ViewController.indexPathRow ?? 0)
-            
-            ViewController.indexPathRow = nil
-            
+    func edit( _ name: String, _ secondName: String, _ raiting: String){
+            student.editData(name, secondName, raiting, indexPathRow: indexPath)
+
             dismiss(animated: true, completion: nil)
-            
-        } else {
-            
-            student.saveData(name, secondName, raiting)
-            
-            let ac = UIAlertController(title: "Save successful", message: "Add another one?", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){_ in
-                
-                self.navigationController?.popToRootViewController(animated: true)
-                
-            })
-            
-            ac.addAction(UIAlertAction(title: "NewStudent", style: .default){ [self]_ in
-                nameTextField.text = ""
-                secondNameTextField.text = ""
-                raitingTextField.text = ""
-            })
-            
-            present(ac, animated: true)
-        }
     
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
         
     }
     
+    func save(_ name: String, _ secondName: String, _ raiting: String){
+        student.saveData(name, secondName, raiting)
+        
+        let ac = UIAlertController(title: "Save successful", message: "Add another one?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){_ in
+            
+            self.navigationController?.popToRootViewController(animated: true)
+            
+        })
+        
+        ac.addAction(UIAlertAction(title: "NewStudent", style: .default){ [self]_ in
+            nameTextField.text = ""
+            secondNameTextField.text = ""
+            raitingTextField.text = ""
+        })
+        
+        present(ac, animated: true)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
+    }
+    
     func alert(typeError: String) {
-        let ac = UIAlertController(title: "Error", message: "Wrong \(typeError)", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Error", message: "U are cant add \(typeError)", preferredStyle: .alert)
     
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
     

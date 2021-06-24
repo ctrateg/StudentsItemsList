@@ -2,6 +2,8 @@ import CoreData
 
 
 extension StudentsEntity: Comparable {
+    
+    // 
     public static func < (lhs: StudentsEntity, rhs: StudentsEntity) -> Bool {
         if lhs.name != rhs.name {
                     return (lhs.name ?? "") < (rhs.name ?? "")
@@ -12,6 +14,7 @@ extension StudentsEntity: Comparable {
                 }
     }
     
+    //
     public static func > (lhs: StudentsEntity, rhs: StudentsEntity) -> Bool {
         if lhs.name != rhs.name {
                     return (lhs.name ?? "") > (rhs.name ?? "")

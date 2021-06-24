@@ -6,7 +6,6 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: <#T##Any?#>, action: <#T##Selector?#>)
         student.loadItems()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.shouldReload), name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
@@ -48,12 +47,11 @@ class TableViewController: UITableViewController {
         
         let changeVc = storyboard.instantiateViewController(withIdentifier: "AddInformation") as! ViewController
         
-        ViewController.indexPathRow = indexPath.row
-        
         changeVc.loadViewIfNeeded()
         changeVc.nameTextField.text = studentData.name
         changeVc.secondNameTextField.text = studentData.secondName
         changeVc.raitingTextField.text = studentData.raiting
+        changeVc.indexPath = indexPath.row
         
         self.present(changeVc, animated: true)
     }
