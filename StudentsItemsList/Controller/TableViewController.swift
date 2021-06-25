@@ -51,8 +51,12 @@ class TableViewController: UITableViewController {
         changeVc.nameTextField.text = studentData.name
         changeVc.secondNameTextField.text = studentData.secondName
         changeVc.raitingTextField.text = studentData.raiting
-        changeVc.indexPath = indexPath.row
         
+        func indexPathFunc() -> ViewController {
+            let viewController = ViewController()
+            viewController.indexPathRow = indexPath.row
+            return viewController
+        }
         self.present(changeVc, animated: true)
     }
     

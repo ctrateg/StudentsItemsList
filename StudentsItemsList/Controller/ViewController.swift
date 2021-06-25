@@ -3,7 +3,7 @@ import CoreData
 
 class ViewController: UIViewController {
     let student = Students()
-    var indexPath = -1
+    var indexPathRow: Int?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         
         switch contains(person) {
         case "":
-            if indexPath == -1 {
+            if indexPathRow != nil {
                 save(nameStudent, secondNameStudent, raiting)
             } else {
                 edit(nameStudent, secondNameStudent, raiting)
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     
     
     func edit( _ name: String, _ secondName: String, _ raiting: String){
-            student.editData(name, secondName, raiting, indexPathRow: indexPath)
+            student.editData(name, secondName, raiting, indexPathRow: indexPathRow ?? 0)
 
             dismiss(animated: true, completion: nil)
     
