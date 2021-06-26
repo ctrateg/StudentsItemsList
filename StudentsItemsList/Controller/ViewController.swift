@@ -4,10 +4,12 @@ import CoreData
 class ViewController: UIViewController {
     let student = Students()
     var indexPathRow: Int?
+
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var secondNameTextField: UITextField!
     @IBOutlet weak var raitingTextField: UITextField!
+    
     
     //Cancel button
     @IBAction func cancelButton(_ sender: Any) {
@@ -15,26 +17,22 @@ class ViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
     /// Save button, relize check textField, creat new student, edit student
     /// - Parameter sender: Any
     @IBAction func saveButton(_ sender: Any) {
         let secondNameStudent = secondNameTextField.text ?? ""
         let nameStudent = nameTextField.text ?? ""
         let raiting = raitingTextField.text ?? ""
-        let person = [nameStudent, secondNameStudent, raiting]
+        let result = checkTF(nameStudent, secondNameStudent, Int(raiting) ?? 0)
         
-        switch contains(person) {
-        case "":
-            if indexPathRow != nil {
-                save(nameStudent, secondNameStudent, raiting)
-            } else {
-                edit(nameStudent, secondNameStudent, raiting)
-            }
-            
-        default:
-            alert(typeError: contains(person))
+        if result == (true, "fine"){
+            saveOrEditLogic(nameStudent,secondNameStudent,raiting)
+        } else {
+            alertContains(typeError: result.1)
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,24 +40,45 @@ class ViewController: UIViewController {
         student.loadItems()
     }
     
-    func contains(_ persons: [String]) -> String {
-        var result = ""
-        for person in persons {
-            switch person.lowercased() {
-            case "a"..."z":
-                result = ""
-            case "а"..."я":
-                result = ""
-            case "1"..."5":
-                result = ""
-            default:
-                result = "\(person)"
-            }
+    
+    func contains(_ letter: String) -> Bool {
+        var result = Bool()
+        switch letter.lowercased() {
+        case "a"..."z":
+            result = true
+        case "а"..."я":
+            result =  true
+        default:
+            result = false
         }
         return result
     }
-
-
+    
+    
+    func checkTF(_ name: String, _ secondName: String, _ raiting: Int) -> (Bool, String) {
+        if contains(name) == false {
+            return (false, name)
+        }
+        
+        if contains(secondName) == false  {
+            return (false, secondName)
+        }
+        
+        if contains(raiting) == false  {
+            return (false, String(raiting))
+        }
+        
+        return (true, "fine")
+    }
+    
+    
+    func contains(_ raiting: Int) -> Bool{
+        if raiting >= 1 && raiting <= 5{
+            return true
+        } else {
+            return false
+        }
+    }
     
     
     func edit( _ name: String, _ secondName: String, _ raiting: String){
@@ -70,6 +89,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
         
     }
+    
     
     func save(_ name: String, _ secondName: String, _ raiting: String){
         student.saveData(name, secondName, raiting)
@@ -92,11 +112,21 @@ class ViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
     }
     
-    func alert(typeError: String) {
+    
+    func alertContains(typeError: String) {
         let ac = UIAlertController(title: "Error", message: "U are cant add \(typeError)", preferredStyle: .alert)
     
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
     
         present(ac, animated: true)
+    }
+    
+    
+    func saveOrEditLogic( _ name: String, _ secondName: String, _ raiting: String){
+        if indexPathRow == nil{
+            save(name, secondName, raiting)
+        }  else {
+            edit(name, secondName, raiting)
+        }
     }
 }

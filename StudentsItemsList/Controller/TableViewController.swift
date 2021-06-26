@@ -4,6 +4,7 @@ import CoreData
 class TableViewController: UITableViewController {
     let student = Students()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         student.loadItems()
@@ -11,19 +12,23 @@ class TableViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.shouldReload), name: NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
     }
     
+    
     @objc func shouldReload() {
         self.tableView.reloadData()
         student.loadItems()
     }
     
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return student.informationAboutStudent.count
     }
 
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let currentStudent = student.informationAboutStudent[indexPath.row]
@@ -34,13 +39,16 @@ class TableViewController: UITableViewController {
         return cell
     }
 
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
+    
     //Open then tapped cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let studentData = student.informationAboutStudent[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
@@ -51,20 +59,18 @@ class TableViewController: UITableViewController {
         changeVc.nameTextField.text = studentData.name
         changeVc.secondNameTextField.text = studentData.secondName
         changeVc.raitingTextField.text = studentData.raiting
+        changeVc.indexPathRow = indexPath.row
         
-        func indexPathFunc() -> ViewController {
-            let viewController = ViewController()
-            viewController.indexPathRow = indexPath.row
-            return viewController
-        }
         self.present(changeVc, animated: true)
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         tableView.reloadData()
     }
+    
     
     // delet button after 11 version
     @available(iOS 11.0, *)
@@ -91,6 +97,7 @@ class TableViewController: UITableViewController {
         
         return swipeActions
     }
+    
     
     //delet button до 11 version
     @available(iOS, deprecated: 11.0)

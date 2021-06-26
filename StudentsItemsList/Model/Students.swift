@@ -2,13 +2,14 @@ import CoreData
 import UIKit
 
 class Students {
-    
     var informationAboutStudent: [StudentsEntity] = []
+    
     
     // links
     let nameAttributeKey = "name"
     let secondNameAttributeKey = "secondName"
     let raitingAttributeKey = "raiting"
+    
     
     //save function
     func saveData(_ name: String, _ secondName: String, _ raiting: String) {
@@ -33,6 +34,7 @@ class Students {
         }
     }
     
+    
     func loadItems() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -49,6 +51,7 @@ class Students {
             
         }
     }
+    
     
     // edit funcion
     func editData(_ name: String, _ secondName: String, _ raiting: String, indexPathRow: Int){
